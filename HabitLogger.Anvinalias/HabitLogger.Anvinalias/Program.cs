@@ -51,18 +51,42 @@ internal class Program
             case "1":
                 DisplayAllRecord();
                 break;
-            case "2":
-                InsertRecord();
-                break;
-            case "3":
-                UpdateRecord();
-                break;
-            case "4":
-                DeleteRecord();
-                break;
-            default:
-                Console.WriteLine("Invalid Choice");
-                break;
+            //case "2":
+            //    InsertRecord();
+            //    break;
+            //case "3":
+            //    UpdateRecord();
+            //    break;
+            //case "4":
+            //    DeleteRecord();
+            //    break;
+            //default:
+            //    Console.WriteLine("Invalid Choice");
+            //    break;
+        }
+
+         void DisplayAllRecord()
+        {
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM habitLog";
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Id: {reader.GetString(0)} date: {reader.GetString(1)} Quantity: {reader.GetString(2)}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No record found");
+                }
+                connection.Close();
+            }
         }
     }
 }
