@@ -13,7 +13,6 @@ internal class Program
         SQLiteDataReader reader;
 
         string connectionString = @$"Data Source= HabitTracker.db";
-            
 
         try
         {
@@ -21,7 +20,8 @@ internal class Program
             {
                 connection.Open();
                 command = connection.CreateCommand();
-                command.CommandText = "CREATE TABLE IF NOT EXISTS habitLog (Id INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, Quantity INTEGER)"; ;
+                command.CommandText = @"CREATE TABLE IF NOT EXISTS habitLog
+                        (Id INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, Quantity INTEGER)"; ;
                 command.ExecuteNonQuery();
                 connection.Close();
             }
@@ -43,7 +43,26 @@ internal class Program
 
             Console.WriteLine("\nEnter your choice: ");
             userChoice = Console.ReadLine();
-        
+
         } while (userChoice != "0");
+
+        switch (userChoice)
+        {
+            case "1":
+                DisplayAllRecord();
+                break;
+            case "2":
+                InsertRecord();
+                break;
+            case "3":
+                UpdateRecord();
+                break;
+            case "4":
+                DeleteRecord();
+                break;
+            default:
+                Console.WriteLine("Invalid Choice");
+                break;
+        }
     }
 }
